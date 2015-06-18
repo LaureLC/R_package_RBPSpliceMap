@@ -3,10 +3,11 @@ function(cover, from = 0, to) {
 	# Function: to recover cover datas into a single vector
 	# IN : cover (Objet Rle  //  package: S4Vectors)
 	# OUT: vector
+	if (to > length(cover))
+		cover = cover[from:length(cover)]
+	else
+		cover = cover[from:to]
 	lengths = cover@lengths
-	# We make length begin by from = 0 to compare with the same position
-	# +1 because allows to include the from
-	lengths[1] = (lengths[1] - from) + 1
 	values = cover@values
 	# Creation of a real rle
 	testRle = list(lengths,values)

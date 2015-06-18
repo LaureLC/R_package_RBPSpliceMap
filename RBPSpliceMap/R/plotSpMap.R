@@ -1,5 +1,5 @@
 plotSpMap <-
-function(spMapList){
+function(spMapList, ylim=c(0,max(spMapList[[1]])), type = "s", color = "black"){
 	# Recovery of results, from the list given by the user, separately
 	readsNumber = spMapList[[1]]
 	spSite = spMapList[[2]]
@@ -14,15 +14,13 @@ function(spMapList){
 		boxplot(c(-pI,1,pE,pE,pE), horizontal=TRUE, axes = FALSE, lty = "solid", lwd = 2, range = pI)	# to represent the exon
 		#Little text to indicate the splice Site and annotate the exon
 		mtext("3'SS", side = 3, line = -2, at = 0)
-		mtext("EXON", side = 3, line = -4.5, at = 16)
 		# cover graph
-		plot(bp, readsNumber, "s",ylim = c(0,max(readsNumber))) }
+		plot(bp, readsNumber, type = type,ylim = ylim, col = color) }
 	
 	else {
 		bp = -pE:pI
 		par(mfrow = c(2,1),mai = c(0.8, 1, 0.1, 1), oma = c(5,1,1,1))
 		boxplot(c(-pE,-pE,-pE,-1,pI), horizontal=TRUE, axes = FALSE, lty = "solid", lwd = 2, range = pI)
 		mtext("5'SS", side = 3, line = -2, at = 0)
-		mtext("EXON", side = 3, line = -4.5, at = -12)
-		plot(bp, readsNumber, "s", ylim = c(0,max(readsNumber))) }
+		plot(bp, readsNumber, type = "s", ylim = ylim, col = color) }
 }

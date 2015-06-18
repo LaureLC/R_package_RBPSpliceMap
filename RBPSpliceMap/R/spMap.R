@@ -1,7 +1,7 @@
 spMap <-
-function(exonInterest, mapReadsGRanges, spSite, padding, goal) {
+function(exonInterest, mapReadsGRanges, spSite, padding, goal, window = 50) {
 	# Function: calculate a cover vector from all cover vector described in the given "exonInterest" GRanges object
-	# IN : padding = c(pE, pI), spSite = "5SS" ou "3SS", goal = (ex: "sum", "mean", ...)
+	# IN : padding = c(pE, pI), spSite = "5SS" ou "3SS", goal = (ex: "normMean", "licatalosi", "sum", "mean", ...)
 	# OUT: list with a cover vector, the splice site and the padding
 	
 	# padding treatment
@@ -33,12 +33,40 @@ function(exonInterest, mapReadsGRanges, spSite, padding, goal) {
 		normVectors = apply(tableCoverVector, MARGIN=1, function(x) x/max(x))
 		# Some vectors can only contain zeros so the max is 0
 		# A division by 0 give here a "NaN" in the matrix, we replace it by 0
-		for (i in 1:length(normVectors)) {
-			if (normVectors[i] == "NaN")
-				normVectors[i] = 0
-		}					
+		normVectors[normVectors == "NaN"] = 0
 		result = apply(normVectors, MARGIN=1, mean)
 	}
+	
+	#licatalosi function
+	else if (goal == "licatalosi") {
+		if ((pE + pI)%%window != 0)
+			return("for licatalosi function, padding(pE + pI) has to be a multiple of window")
+		else{
+			sumLine = apply(tableCoverVector, MARGIN=1, function(x) x/sum(x)) # /!\ INVERSE MATRIX
+			# Some vectors can only contain zeros so the sum is 0
+			# A division by 0 give here a "NaN" in the matrix, we replace it by 0
+			sumLine[sumLine == "NaN"] = 0	
+			
+			#Creation of complexity matrix
+			complexity = sumLine
+			complexity[complexity > 0] = 1
+			
+			#Application of licatalosiComplexity function to each column
+			complexityMatrix = apply(complexity, MARGIN=1, function(x) licatalosiComplexity(x, window))
+			
+			#Sum of each line
+			complexityResult = apply(complexityMatrix, MARGIN=1, sum)
+			
+			#Application of sumLineMatrix function to each column
+			sumLineMatrix = apply(sumLine, MARGIN=2, function(x) sumWindow(x, window))
+			
+			#Sum of each line
+			sumLineResult = apply(sumLineMatrix, MARGIN=1, sum)
+			
+			result = complexityResult * sumLineResult
+		}
+	}
+	
 	# Other functions (ex: sum, mean, ...) -> functions already existing in R
 	# If the user want to use another function between cover vectors
 	else

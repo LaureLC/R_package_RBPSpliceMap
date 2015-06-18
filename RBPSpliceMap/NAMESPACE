@@ -2,12 +2,13 @@ import(GenomicRanges)
 import(GenomicAlignments)
 
 export("bamToGRanges",
-		"spMap",
-		"exonInterestTreatment",
-		"mapReadsTreatment",
-		"strandSelect",
 		"chromosomeSelect",
-		"intervalSelect",
 		"coverageChr",
 		"coverageVector",
-		"plotSpMap")
+		"exonInterestTreatment",
+		"intervalSelect",
+		"mapReadsTreatment",
+		"plotSpMap",
+		"spMap",
+		"strandSelect")
+		

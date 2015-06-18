@@ -4,7 +4,7 @@
 \title{mapReadsTreatment}
 
 \description{
-This function, from a GRanges object, give the coverage (number of reads) on a "chromosome", a "strand" and a range of interest ("from" and "to")
+This function, from a GRanges object, computes the coverage (number of reads/nucleotide) for a region defined by "chromosome", "strand" and a range of interest ("from" and "to") for a GRanges object.
 }
 
 \usage{
@@ -14,26 +14,26 @@ mapReadsTreatment(mapReadsGRanges, chromosome, strand, from, to)
 \arguments{
   \item{mapReadsGRanges}{
 GRanges object containing mapped reads (generally from a bam file)
-(see bamToGRanges())
+(see \code{\link{bamToGRanges}})
 }
   \item{chromosome}{
-chromosome of interest as a string (ex: "7" or "chr7")
-/!\  Write it like it is written in the GRanges object
+chromosome of interest as a string (ex: "7" or "chr7")\cr
+/!\  It should conform to the GRanges object notation
 }
   \item{strand}{
-strand of interest as a string ("+", "-", "*")
-"*" correspond to the 2 strands
+strand of interest as a string ("+", "-", "*")\cr
+"*" correspond to both strands
 }
   \item{from}{
-Coordinate from where you want the coverage
+Coordinate from where you want the coverage.
 }
   \item{to}{
-Coordinate where you want the coverage to end
+Coordinate where you want the coverage to end.
 }
 }
 
 \details{
-The return coverage vector indicate the number of reads per nucleotide
+The returned coverage vector indicates the number of reads per nucleotide along the region of interest.
 }
 
 \value{Coverage Vector}
@@ -41,21 +41,20 @@ The return coverage vector indicate the number of reads per nucleotide
 \author{Laure Le Calvez <laure.le-calvez@laposte.net>}
 
 \seealso{
-\code{\link{strandSelect}}
-\code{\link{intervalSelect}}
-\code{\link{coverageChr}}
+\code{\link{strandSelect}}\cr
+\code{\link{intervalSelect}}\cr
+\code{\link{coverageChr}}\cr
 \code{\link{coverageVector}}
 }
 
 \examples{
 iCLIPData = system.file("extdata", "iCLIPData.bam", package="RBPSpliceMap", mustWork=TRUE)
-#Create a GRanges from a bam file
+#Create a GRanges object from a bam file
 mapReadsGRanges = bamToGRanges(iCLIPData)
-#Treatment of the GRanges with mapped reads
+#Treatment of the GRanges object with mapped reads
 mapReadsTreatment(mapReadsGRanges, chromosome = "chr7", strand = "+", from = 810695, to = 810796)
 }
 
 \keyword{coverage}
 \keyword{reads}
 \keyword{mapping}
-

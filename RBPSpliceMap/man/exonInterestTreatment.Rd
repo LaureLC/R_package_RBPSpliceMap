@@ -4,7 +4,7 @@
 \title{exonInterestTreatment}
 
 \description{
-This function create a GRanges from another with modified coordinates given by the splice site chosen and the padding.
+Given a GRanges object corresponding to exon coordinates, this function creates a new GRanges object with modified coordinates depending on the splice site and the padding chosen for the analysis.
 }
 
 \usage{
@@ -19,16 +19,16 @@ GRanges object containing coordinates of interest (thess coordinates match with 
 Splice Site of interest ("5SS" or "3SS")
 }
   \item{pE}{
-padding exon. Number of nucleotides wanted around the splice site on the exon
+padding exon. Number of nucleotides required in the exon
 }
   \item{pI}{
-padding intron. Number of nucleotides wanted around the splice site on the intron
+padding intron. Number of nucleotides required in the intron
 }
 }
-
 \details{
-If the input GRanges contain strand = "*", there are excluded, only strand = "+" or "-" are treated
-The return GRanges contain coordinates of nucleotides framing ranges of interest around the splice site.
+Only strand = "+" or "-" are treated. If the input GRanges contains unspecified strands = "*", they are excluded.\cr
+The returned GRanges contains the genomic coordinates of the region to be analysed around the chosen splice site.\cr
+If an exon is at the beggining of the chromosome and, with the padding, coordinates become negatives, there will be a problem.
 }
 
 \value{GRanges object}
@@ -37,11 +37,11 @@ The return GRanges contain coordinates of nucleotides framing ranges of interest
 
 \examples{
 regulatedExons = system.file("extdata", "regulatedExons.bed", package="RBPSpliceMap", mustWork=TRUE)
-#Create GRanges from a bedFile with exons of interest
+#Create GRanges object from a bedFile with exons of interest
 data <- read.table(regulatedExons, header = TRUE)
 colnames(data) = c('chr', 'start', 'end', 'ProbeID', 'pval', 'strand')
 exonInterest = with(data, GRanges(chr, IRanges(start, end), strand))
-#Treatment of the GRanges with exons of Interest
+#Treatment of the GRanges object with exons of Interest
 exonInterestTreatment(exonInterest, spSite = "3SS", pE = 40, pI = 200)
 }
 

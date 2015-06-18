@@ -2,9 +2,9 @@ Package: RBPSpliceMap
 Type: Package
 Title: Summarize CLIPSeq data
 Version: 1.0
-Date: 2015-05-20
+Date: 2015-06-18
 Author: Laure Le Calvez
 Maintainer: Laure Le Calvez <laure.le-calvez@laposte.net>
 Depends: R (>= 2.10.0), GenomicRanges (>= 1.17.20), GenomicAlignments (>= 1.1.16)
-Description: This package is intended to manipulate CLIP data and summarize them along genomic regions. Typically it can be use to draw RNA splice map. It allows to select a chromosome, strand and interval of interest. It gives numerical and graphical results about the coverage of splice sites and their surroundings.
+Description: This package is intended to manipulate CLIPSeq data and summarize them along genomic regions. Typically, it can be used to draw RNA splice map such as those found in licatalosi et al. or using other summarize functions. It allows to select a chromosome, strand and interval of interest. It provides numerical and graphical output about the coverage of splice sites and their surroundings.
 License: GPL(>=2.0)
